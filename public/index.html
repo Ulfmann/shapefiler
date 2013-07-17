@@ -5,6 +5,9 @@
 <script type="text/javascript" src="src/binarywrapper.js"></script>
 <script type="text/javascript" src="src/shapefile.js"></script>
 <script type="text/javascript" src="src/dbf.js"></script>
+<script type="text/javascript" src="src/ol_shapefile.js"></script>
+<script type="text/javascript" src="lib/OpenLayers/OpenLayers.js"></script>
+<script type="text/javascript" src="ol_simple.js"></script>
 <!--[if IE]><script src="lib/excanvas.js"></script><![endif]-->
 <script type="text/javascript">
 
@@ -19,10 +22,10 @@ window.onload = function() {
   var dbfLoader = new BinaryAjax(dbfURL, onDbfComplete, onDbfFail);
 }
 
-function onShpFail() { 
+function onShpFail() {
   alert('failed to load ' + shpURL);
 }
-function onDbfFail() { 
+function onDbfFail() {
   alert('failed to load ' + dbfURL);
 }
 
@@ -35,8 +38,8 @@ function onShpComplete(oHTTP) {
 
   if (shpFile.header.shapeType != ShpType.SHAPE_POLYGON && shpFile.header.shapeType != ShpType.SHAPE_POLYLINE) {
     alert("Shapefile does not contain Polygon records (found type: "+shpFile.header.shapeType+")");
-  }  
-  
+  }
+
   //if (window.console && window.console.log) console.log(records);
   if (dbfFile) {
     render(shpFile.records, dbfFile.records);
@@ -65,7 +68,7 @@ function render(records, data) {
   var canvas = document.getElementById('map');
 
   if (window.G_vmlCanvasManager) {
-    G_vmlCanvasManager.initElement(canvas); 
+    G_vmlCanvasManager.initElement(canvas);
   }
 
   var t1 = new Date().getTime();
@@ -104,14 +107,14 @@ function render(records, data) {
   if (window.console && window.console.log) console.log('starting rendering...');
 
   var ctx = canvas.getContext('2d');
-  
+
   var sc = Math.min(800 / box.width, 400 / box.height);
 
   ctx.fillStyle = '#ccccff';
   ctx.fillRect(0,0,800,400);
 
   ctx.lineWidth = 0.5;
-  ctx.strokeStyle = '#ffffff'; 
+  ctx.strokeStyle = '#ffffff';
   for (var i = 0; i < records.length; i++) {
     var record = records[i];
     if (record.shapeType == ShpType.SHAPE_POLYGON || record.shapeType == ShpType.SHAPE_POLYLINE) {
@@ -141,7 +144,7 @@ function getFillRecord(record) {
     popn = Math.max(0, Math.min(100000000, popn));
     var colorIndex = parseInt((colors.length-1) * popn / 100000000);
     var color = colors[colorIndex];
-    //if (window.console && window.console.log) console.log('popn: ' + popn + ' color: ' + color);  
+    //if (window.console && window.console.log) console.log('popn: ' + popn + ' color: ' + color);
     return color;
   }
   return '#000000';

@@ -1,4 +1,4 @@
-// all the interaction stuff is copied almost verbatim from 
+// all the interaction stuff is copied almost verbatim from
 // http://www.openlayers.org/dev/examples/dynamic-text-layer.html
 
 window.onload = function () {
@@ -17,9 +17,9 @@ window.onload = function () {
         'featureselected': onFeatureSelect,
         'featureunselected': onFeatureUnselect
     });
-    
+
     // load the shapefile
-    var theUrl = 'naturalearthdata/cultural/110m-admin-0-countries';
+    var theUrl = 'naturalearthdata/custom/PLZ_2_Leitregion_2013_region';
     getOpenLayersFeatures(theUrl, function (fs) {
 	// reproject features
 	// this is ordinarily done by the format object, but since we're adding features manually we have to do it.
@@ -32,7 +32,7 @@ window.onload = function () {
 	shpLayer.addFeatures(fs);
     });
 }
-			  
+
 
 // Needed only for interaction, not for the display.
 function onPopupClose(evt) {
@@ -40,7 +40,7 @@ function onPopupClose(evt) {
     var feature = this.feature;
     if (feature.layer) { // The feature is not destroyed
 	selectControl.unselect(feature);
-    } else { // After "moveend" or "refresh" events on POIs layer all 
+    } else { // After "moveend" or "refresh" events on POIs layer all
 	//     features have been destroyed by the Strategy.BBOX
 	this.destroy();
     }
